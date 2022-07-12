@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4">
+                <!-- Post title-->
+                <h2 class="fw-bolder mb-1">{{article.title}}</h2>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">Posted on {{article.created_date}} by {{article.author}}</div>
+            </header>
+            <!-- Preview image figure-->
+            {% if article.article_image %}
+            <figure class="mb-4"><img class="img-fluid rounded" src="{{article.article_image.url}}"alt="..." /></figure>
+            {% endif %}
+            <!-- Post content-->
+            <section class="mb-5">
+                <p class="lead">{{article.content | safe}}</p>
+            <br><br>
+            <h4>Comments</h4>
+            <hr>
+            {% if comments %}
+            {% for comment in comments %}
+            <div class="card bg-warning">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0"><img style="margin-top: 5px" class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />&emsp;</div>
+                        <div class="ms-3">
+                            <div class="fw-bold">{{comment.comment_author}}</div>
+                            {{comment.comment_date}}
+                            <hr>
+                            {{comment.comment_content}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </section>
+            {% endif %}
+        </article>
+        <section class="mb-5">
+            <div class="card bg-warning">
+                <strong>&emsp;Leave a Comment:</strong> 
+                <div class="card-body">
+                    <label for="formGroupExampleInput">Comment</label>
+                    <!-- Comment form-->
+                    <form method="post" action="/articles/comment/{{article.id}}" class="mb-4"><textarea name="comment_content" class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>{% csrf_token %}
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Fullname</label>
+                            <input name="comment_author" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name">
+                          </div>
+                    <button type="submit" class="btn btn-light">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock body %}

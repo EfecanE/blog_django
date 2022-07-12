@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1 style="font-size: 50px">Articles</h1>
+<!--Search -->
+<div style="float: right; margin-bottom: 20px">
+{% csrf_token %}
+<form>
+    <input type="text" name="keyword" class="input-sm">
+    <button type="submit" class="btn btn-warning">Search</button>
+</form>
+</div>
+<br>
+<hr>
+
+
+{% if articles %}
+{% for article in articles %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4"> 
+                <!-- Post title-->
+                <a href="/articles/article/{{article.id}}"><h2 class="fw-bolder mb-1">{{article.title}}</h2></a>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">Posted on {{article.created_date}} by {{article.author}}</div>
+            </header>
+            <!-- Preview image figure-->
+            {% if article.article_image %}
+            <figure class="mb-4"><img class="img-fluid rounded" src="{{article.article_image.url}}"alt="..." /></figure>
+            {% endif %}
+            <!-- Post content-->
+            <section class="mb-5">
+                <p class="lead">{{article.content | safe | truncatewords:50}}</p>
+                <a style="float: right;"class="btn btn-warning" href="/articles/article/{{article.id}}">Read more...</a>
+                <br>
+                <hr> 
+            </section>
+        </article>
+        
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-warning">Can't found article</div>
+{% endif %}
+
+{% endblock body %}
