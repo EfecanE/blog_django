@@ -6,8 +6,8 @@ You can write your blogs and share your own content on this website. You can com
 * Python
 * Django
 * SQLite3
-* HTML
-* CSS
+* HTML5
+* CSS3
 * JS
 
 ##  Website
